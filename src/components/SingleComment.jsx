@@ -1,15 +1,11 @@
-import { Component } from 'react'
-import { Card } from 'react-bootstrap'
+import { ListGroupItem } from 'react-bootstrap'
 const URL = 'https://striveschool-api.herokuapp.com/api/comments/'
 
-class SingleComment extends Component {
-  state = {
-    bookReviews: null,
-  }
-
-  fetchBook = async () => {
+const SingleComment = ({ comment }) => {
+  const deleteComment = async (id) => {
     try {
-      const resp = await fetch(URL + this.props.bookId, {
+      const resp = await fetch(URL + id, {
+        method: 'DELETE',
         headers: {
           Authorization:
             'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjJmYTdhMDI4MzJlODAwMTk4NzMwYjUiLCJpYXQiOjE3MTQzOTkyODcsImV4cCI6MTcxNTYwODg4N30.nnv202j_wZhkeAVFlNyy29DzXdworYBkTkocu0wXEhs',
@@ -17,30 +13,21 @@ class SingleComment extends Component {
       })
 
       if (resp.ok) {
-        const book = await resp.json()
-        this.setState({ bookReviews: book })
-        console.log(book)
+        alert('The review has been deleted!')
       } else {
-        throw new Error('Error retrieving data from comments')
+        throw new Error('The review has not been deleted!')
       }
     } catch (error) {
-      console.log(error)
-    } finally {
+      alert(error)
     }
   }
 
-  componentDidMount() {
-    this.fetchBook()
-  }
-
-  render() {
-    return (
-      //   this.state.bookReviews && this.state.bookReviews.map((element) => <Card.Text key={element._id}>prova</Card.Text>)
-      this.state.bookReviews !== null
-        ? this.state.bookReviews.map((element) => <Card.Text key={element._id}>{element.comment}</Card.Text>)
-        : console.log('altra opzione')
-    )
-  }
+  return (
+    <ListGroupItem className="d-flex justify-content-between align-items-center">
+      <p className="d-inline-block my-1 ">{comment.comment}</p>
+      <i className="bi bi-x fs-5" onClick={() => deleteComment(comment._id)}></i>
+    </ListGroupItem>
+  )
 }
 
 export default SingleComment

@@ -1,6 +1,7 @@
 import { Component } from 'react'
 import { Badge, Card, Col } from 'react-bootstrap'
 import SingleComment from './SingleComment'
+import CommentArea from './CommentArea'
 
 class SingleBook extends Component {
   state = {
@@ -26,16 +27,16 @@ class SingleBook extends Component {
               {this.props.type.title}
             </Card.Title>
             <div className="d-flex justify-content-between">
-              <Card.Text>{this.props.type.category}</Card.Text>
+              <Card.Text className="fw-medium">{this.props.type.category}</Card.Text>
               <Badge
                 className={this.state.selected ? 'align-self-start p-2 bg-danger' : 'align-self-start p-2 bg-secondary'}
               >
                 {this.props.type.price}
               </Badge>
             </div>
-            {this.state.selected && <SingleComment bookId={this.props.type.asin} />}
           </Card.Body>
         </Card>
+        {this.state.selected && <CommentArea bookId={this.props.type.asin} />}
       </Col>
     )
   }

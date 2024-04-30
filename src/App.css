@@ -23,3 +23,7 @@
 #container::-webkit-scrollbar-thumb:hover {
   background: rgb(56, 56, 56);
 }
+
+.bi-x:hover {
+  color: red;
+}
